@@ -1,20 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import Login from "./pages/Login";
 import Home from "./pages/Home";
 import Register from "./pages/Register";
+import { AuthProvider, useAuth } from "./context/AuthContext";
 
-function App() {
-  const [isAuth, setIsAuth] = useState(false);
-
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) setIsAuth(true);
-  }, []);
-
-  function logout() {
-    localStorage.removeItem("token");
-    setIsAuth(false);
-  }
+function AppInner() {
+  const { isAuth, logout, setIsAuth } = useAuth()
 
   return (
     <div className="App">
@@ -33,4 +24,10 @@ function App() {
   );
 }
 
-export default App;
+export default function App() {
+  return(
+    <AuthProvider>
+      <AppInner></AppInner>
+    </AuthProvider>
+  )
+}

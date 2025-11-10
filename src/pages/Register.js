@@ -17,14 +17,14 @@ const handleSubmit = async () => {
 
     if (!res.ok) {
       const errorData = await res.json();
-      console.log("❌ Error desde backend:", errorData);
+      console.log("Error desde backend:", errorData);
       return;
     }
 
     setSuccess(true);
 
   } catch (error) {
-    console.log("🔥 Error de red:", error);
+    console.log("Error de red:", error);
   }
 }
 

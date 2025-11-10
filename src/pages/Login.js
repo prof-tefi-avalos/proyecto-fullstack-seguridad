@@ -1,8 +1,10 @@
 import {useState} from 'react'
+import { useAuth } from '../context/AuthContext'
 
 export default function Login({setIsAuth}){
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
+    const { login } = useAuth()
 
     const handleSubmit = async() => {
         const res = await fetch('http://localhost:5001/api/auth/login',{
@@ -11,9 +13,13 @@ export default function Login({setIsAuth}){
             body: JSON.stringify({email, password})
         })
 
+        if(!res.ok) {
+            console.log('error en el login')
+        }
+
         const data = await res.json()
-        localStorage.setItem("token", data.token)
-        setIsAuth(true)
+        console.log(data)
+        login(data.token)
     }
 
     return(
